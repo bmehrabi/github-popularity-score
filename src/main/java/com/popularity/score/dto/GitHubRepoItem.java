@@ -1,5 +1,6 @@
 package com.popularity.score.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,21 @@ public class GitHubRepoItem {
 
     private String name;
     private GitHubOwner owner;
-    private int stargazers_count;
-    private int forks_count;
-    private Instant updated_at;
-    private Instant created_at;
+
+    @JsonProperty("stargazers_count")
+    private int stargazersCount;
+
+    @JsonProperty("forks_count")
+    private int forksCount;
+
+    @JsonProperty("updated_at")
+    private Instant updatedAt;
+
+    @JsonProperty("created_at")
+    private Instant createdAt;
+
     private String language;
+
+    @JsonProperty("popularity_score")
+    private double popularityScore = 0.0;
 }

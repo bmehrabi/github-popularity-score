@@ -50,7 +50,8 @@ public class GitHubSearchClientTest {
                         5,
                         Instant.parse("2022-01-01T00:00:00Z"),
                         Instant.parse("2022-02-01T00:00:00Z"),
-                        "Java"
+                        "Java",
+                        1.0
                 )
         );
 

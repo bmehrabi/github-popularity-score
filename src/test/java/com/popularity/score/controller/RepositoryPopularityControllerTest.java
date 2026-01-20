@@ -1,8 +1,8 @@
 package com.popularity.score.controller;
 
-import com.popularity.score.client.GitHubSearchClient;
 import com.popularity.score.dto.GitHubOwner;
 import com.popularity.score.dto.GitHubRepoItem;
+import com.popularity.score.service.RepositoryPopularityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ class RepositoryPopularityControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GitHubSearchClient client;
+    private RepositoryPopularityService repositoryPopularityService;
 
     private List<GitHubRepoItem> testItems;
 
@@ -43,11 +43,12 @@ class RepositoryPopularityControllerTest {
                         5,
                         Instant.parse("2022-01-01T00:00:00Z"),
                         Instant.parse("2022-02-01T00:00:00Z"),
-                        "Kotlin"
+                        "Kotlin",
+                        0.0
                 )
         );
 
-        when(client.search(
+        when(repositoryPopularityService.getPopularRepositories(
                 LocalDate.of(2022, 1, 1),
                 "Kotlin",
                 1,
@@ -71,7 +72,7 @@ class RepositoryPopularityControllerTest {
                 .andExpect(jsonPath("$[0].owner.login").value("user1"));
 
         // Verify that the controller called the client correctly
-        verify(client).search(
+        verify(repositoryPopularityService).getPopularRepositories(
                 LocalDate.of(2022, 1, 1),
                 "Kotlin",
                 1,
